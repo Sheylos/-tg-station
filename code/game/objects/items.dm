@@ -230,7 +230,7 @@
 							continue
 						if(I.type in rejections) // To limit bag spamming: any given type only complains once
 							continue
-						if(!S.can_be_inserted(I))	// Note can_be_inserted still makes noise when the answer is no
+						if((S.can_be_inserted(I) == 0) || (S.can_be_inserted(I, 0, user, 1) == NO_QUICK_GATHER))	// Note can_be_inserted still makes noise when the answer is no
 							rejections += I.type	// therefore full bags are still a little spammy
 							failure = 1
 							continue
@@ -321,13 +321,11 @@
 /obj/item/proc/ui_action_click()
 	attack_self(usr)
 
+
 /obj/item/proc/IsShield()
 	return 0
 
 /obj/item/proc/IsReflect(var/def_zone) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
-	return 0
-
-/obj/item/proc/IsDeflect() //This proc determines if a weapon deflects thrown projectiles. Experimental as fuck and probably useless.
 	return 0
 
 /obj/item/proc/eyestab(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
